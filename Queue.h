@@ -12,16 +12,18 @@ private:
     int size;
     int capacity;
 public:
-    Queue();
+    Queue(int = 2);
     Queue(const Queue<T>&);
     ~Queue();
+
+    int get_size();
     void enqueue(const T&);
     T dequeue();
     void printQueue();
 };
 
 template<class T>
-Queue<T>::Queue() {
+Queue<T>::Queue(int sizeQueue) {
     size = 0;
     capacity = 2;
     begin = 0, end = 0;
@@ -38,6 +40,11 @@ template<class T>
 Queue<T>::~Queue()
 {
     delete[] queuePtr;
+}
+
+template<class T>
+int Queue<T>::get_size() {
+    return this->size;
 }
 
 template<class T>
@@ -71,7 +78,7 @@ template<class T>
 T Queue<T>::dequeue()
 {
     if (size == 0)
-        return;
+        return NULL;
 
     T returnValue = queuePtr[begin++];
     size--;
@@ -89,12 +96,12 @@ void Queue<T>::printQueue()
     std::cout << "\n Очередь";
 
     if (end == 0 && begin == 0)
-        std::cout << " пустая.";
+        std::cout << " пустая. ";
     else
     {
         std::cout << ":\n\t";
-        for (int ix = end; ix >= begin; ix--)
-            std::cout << queuePtr[ix] << " ";
+        for (int i = begin; i < end; i++)
+            std::cout << queuePtr[i] << " ";
         std::cout << std::endl;
     }
 }

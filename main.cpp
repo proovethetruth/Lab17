@@ -4,16 +4,13 @@
 int main() {
     setlocale(LC_ALL, "Russian");
 
-    Queue<char> myQueue();
+    Queue<int> myQueue(2);
     myQueue.printQueue();
+    
+    for (int i = 0; i < 1000; i++)
+        myQueue.enqueue(i);
 
-    int ct = 1;
-    char ch;
+    myQueue.dequeue();
 
-    for(int i = 0; i < myQueue.size; i++)
-    {
-        std::cin >> ch;
-        myQueue.enqueue(ch);
-    }
     myQueue.printQueue();
 }
