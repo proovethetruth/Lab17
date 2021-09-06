@@ -17,9 +17,20 @@ public:
     ~Queue();
 
     int get_size();
+    int get_begin();
+    int get_end();
     void enqueue(const T&);
     T dequeue();
-    void printQueue();
+
+    template <class T>
+    friend std::ostream& operator<<(std::ostream& out, const Queue<T>& myQueue)
+    {
+        for (int i = 0; i < myQueue.size; ++i) {
+            out << myQueue.queuePtr[i] << " ";
+        }
+        return out;
+    }
+
 };
 
 template<class T>
@@ -45,6 +56,16 @@ Queue<T>::~Queue()
 template<class T>
 int Queue<T>::get_size() {
     return this->size;
+}
+
+template<class T>
+int Queue<T>::get_begin() {
+    return this->begin;
+}
+
+template<class T>
+int Queue<T>::get_end() {
+    return this->end;
 }
 
 template<class T>
@@ -88,22 +109,6 @@ T Queue<T>::dequeue()
         begin -= size + 1; // возвращаем begin на начало очереди
 
     return returnValue;
-}
-
-template<class T>
-void Queue<T>::printQueue()
-{
-    std::cout << "\n Очередь";
-
-    if (end == 0 && begin == 0)
-        std::cout << " пустая. ";
-    else
-    {
-        std::cout << ":\n\t";
-        for (int i = begin; i < end; i++)
-            std::cout << queuePtr[i] << " ";
-        std::cout << std::endl;
-    }
 }
 
 #endif
