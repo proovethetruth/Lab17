@@ -4,6 +4,7 @@
 int main()
 {
 	Queue<std::string> q;
+	q.deque();
 
 	q.enque("We");
 	q.enque("can't");
@@ -31,9 +32,8 @@ int main()
 	std::cout << "\n Size: " << q.get_size();
 
 	std::cout << "\n\n Operator '=': ";
-	z.deque();
-	z.deque();
-	z.deque();
+
+
 	q = z;
 	std::cout << q;
 
@@ -60,4 +60,11 @@ int main()
 	Maths.clear();
 	std::cout << Maths;
 	std::cout << "\n Size: " << Maths.get_size();
+
+	std::cout << "\n\n Z: ";
+	std::cout << z;
+	Queue<std::string> a;
+	a = z.split();
+	std::cout << z;
+	std::cout << a;
 }

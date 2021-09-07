@@ -3,11 +3,18 @@
 
 #include <iostream>
 
-class Point {
+class EmptyError {
 public:
+	EmptyError() {};
+};
+
+class Point {
+private:
 	int x;
 	int y;
 	int z;
+
+public:
 	Point() {
 		x = 0;
 		y = 0;
@@ -108,8 +115,15 @@ public:
 	}
 
 	void deque() {
-		if (size == 0)
-			std::cout << "Queue is Empty" << std::endl;
+		if (size == 0) {
+			try {
+				EmptyError a;
+				throw(a);
+			}
+			catch (EmptyError) {
+				std::cout << "\n Queue is empty!";
+			}
+		}
 		else if (start == end)
 		{
 			delete start;
@@ -160,6 +174,19 @@ public:
 		}
 		end->next = NULL;
 		return *this;
+	}
+
+	Queue<T> split() {
+		Queue<T> splitted;
+		node<T>* tmp = start;
+		int middle = size / 2;
+
+		for (int i = 0; i < middle + 1; i++) {
+			splitted.enque(tmp->data);
+			(*this).deque();
+			tmp = start;
+		}
+		return splitted;
 	}
 };
 
