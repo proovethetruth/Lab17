@@ -138,6 +138,29 @@ public:
 		}
 		return out;
 	}
+
+	Queue<T>& operator=(const Queue<T> &q) {
+		if (this == &q)
+			return *this;
+
+		(*this).clear();
+
+		node<T>* tmp = q.start;
+		node<T>* tmp2 = start;
+
+		start = end = new node<T>(tmp->data);
+		size++;
+
+		while (tmp != q.end) {
+			tmp = tmp->next;
+			tmp2 = new node<T>(tmp->data);
+			end->next = tmp2;
+			end = tmp2;
+			size++;
+		}
+		end->next = NULL;
+		return *this;
+	}
 };
 
 #endif

@@ -26,17 +26,9 @@ int main()
 
 
 	std::cout << "\n\n Copy constructor: ";
-	Queue<std::string> z;
-	z = Queue<std::string>(q);
+	Queue<std::string>z(q);
 	std::cout << z;
 	std::cout << "\n Size: " << q.get_size();
-
-
-	std::cout << "\n\n Clear() function: ";
-	q.clear();
-	std::cout << q;
-	std::cout << "\n Size: " << q.get_size();
-
 
 	std::cout << "\n\n Operator '=': ";
 	z.deque();
@@ -45,6 +37,10 @@ int main()
 	q = z;
 	std::cout << q;
 
+	std::cout << "\n\n Clear() function: ";
+	q.clear();
+	std::cout << q;
+	std::cout << "\n Size: " << q.get_size();
 
 	std::cout << "\n\n Queue of points: ";
 	Queue<Point>Maths;
