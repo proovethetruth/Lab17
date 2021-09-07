@@ -3,6 +3,27 @@
 
 #include <iostream>
 
+class Point {
+public:
+	int x;
+	int y;
+	int z;
+	Point() {
+		x = 0;
+		y = 0;
+		z = 0;
+	}
+	Point(int a, int b, int c) {
+		x = a;
+		y = b;
+		z = c;
+	}
+	friend std::ostream& operator<<(std::ostream& out, Point& p) {
+		out << p.x << p.y << p.z;
+		return out;
+	}
+};
+
 template <class T>
 class node {
 public:
@@ -27,15 +48,25 @@ public:
 		start = end = NULL;
 	}
 
-	//Queue(const Queue<T>& q) {
-	//	node<T>* tmp = 
-	//	while (tmp != NULL) {
-	//		end->next = temp;
-	//		end = temp;
-	//		size++;
-	//	}
-	//	end = new node<T>(q.end);
-	//}
+	Queue(const Queue<T>& q) {
+		size = 0;
+		start = end = NULL;
+
+		node<T>* tmp = q.start;
+		node<T>* tmp2 = start;
+
+		start = end = new node<T>(tmp->data);
+		size++;
+
+		while (tmp != q.end) {
+			tmp = tmp->next;
+			tmp2 = new node<T>(tmp->data);
+			end->next = tmp2;
+			end = tmp2;
+			size++;
+		}
+		end->next = NULL;
+	}
 
 	int get_size() {
 		return size;
