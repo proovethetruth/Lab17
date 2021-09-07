@@ -3,112 +3,110 @@
 
 #include <iostream>
 
-template<class T>
-class Queue
-{
-private:
-    T* queuePtr;
-    int begin, end;
-    int size;
-    int capacity;
+template <class T>
+class node {
 public:
-    Queue(int = 2);
-    Queue(const Queue<T>&);
-    ~Queue();
-
-    int get_size();
-    int get_begin();
-    int get_end();
-    void enqueue(const T&);
-    T dequeue();
-
-    template <class T>
-    friend std::ostream& operator<<(std::ostream& out, const Queue<T>& myQueue)
-    {
-        for (int i = 0; i < myQueue.size; ++i) {
-            out << myQueue.queuePtr[i] << " ";
-        }
-        return out;
-    }
-
+	T data;
+	node<T>* next;
+	node(T x)
+	{
+		data = x;
+		next = NULL;
+	}
 };
 
-template<class T>
-Queue<T>::Queue(int sizeQueue) {
-    size = 0;
-    capacity = 2;
-    begin = 0, end = 0;
-    queuePtr = new T[capacity];
-}
+template <class T>
+class Queue {
+	node<T>* start;
+	node<T>* end;
+	int size;
 
-template<class T>
-Queue<T>::Queue(const Queue& other) {
-    for (int i = 0; i < size; i++)
-        queuePtr[i] = other.queuePtr[i];
-}
+public:
+	Queue() {
+		size = 0;
+		start = end = NULL;
+	}
 
-template<class T>
-Queue<T>::~Queue()
-{
-    delete[] queuePtr;
-}
+	//Queue(const Queue<T>& q) {
+	//	node<T>* tmp = 
+	//	while (tmp != NULL) {
+	//		end->next = temp;
+	//		end = temp;
+	//		size++;
+	//	}
+	//	end = new node<T>(q.end);
+	//}
 
-template<class T>
-int Queue<T>::get_size() {
-    return this->size;
-}
+	int get_size() {
+		return size;
+	}
 
-template<class T>
-int Queue<T>::get_begin() {
-    return this->begin;
-}
+	void clear() {
+		if (size == 0)
+			std::cout << "\n Queue is empty. ";
+		else {
+			while (start != end) {
+				node<T>* temp = start;
+				start = start->next;
+				delete temp;
+			}
+			delete start;
+			start = end = NULL;
+			size = 0;
+		}
+	}
 
-template<class T>
-int Queue<T>::get_end() {
-    return this->end;
-}
+	void enque(T newElem) {
+		node<T>* tmp = new node<T>(newElem);
+		if (size == 0) {
+			start = end = tmp;
+			size++;
+		}
+		else {
+			end->next = tmp;
+			end = tmp;
+			size++;
+		}
+	}
 
-template<class T>
-void Queue<T>::enqueue(const T& newElem)
-{
-    T *tmp;
-    if (size == capacity) {
-        capacity *= 2;
-        tmp = (T*)calloc(capacity, capacity * sizeof(T));
-        if (!tmp)
-        {
-            printf("\n\a ERROR: Can't allocate enough memory");
-            return;
-        }
-        for (int i = 0; i < size; i++)
-        {
-            tmp[i] = queuePtr[i];
-        }
-        delete[] queuePtr;
-        queuePtr = tmp;
-    }
-    queuePtr[end++] = newElem;
-    size++;
+	T front() {
+		if (size == 0)
+			return NULL;
+		else
+			return start->data;
+	}
 
-    // проверка кругового заполнения очереди
-    if (end > size)
-        end -= size + 1; // возвращаем end на начало очереди
-}
+	void deque() {
+		if (size == 0)
+			std::cout << "Queue is Empty" << std::endl;
+		else if (start == end)
+		{
+			delete start;
+			start = end = NULL;
+			size = 0;
+		}
+		else
+		{
+			node<T>* tmp = start;
+			start = start->next;
+			delete tmp;
+			size--;
+		}
+	}
 
-template<class T>
-T Queue<T>::dequeue()
-{
-    if (size == 0)
-        return NULL;
-
-    T returnValue = queuePtr[begin++];
-    size--;
-
-    // проверка кругового заполнения очереди
-    if (begin > size)
-        begin -= size + 1; // возвращаем begin на начало очереди
-
-    return returnValue;
-}
+	friend std::ostream& operator<<(std::ostream& out, Queue<T>& q) {
+		node<T>* tmp = q.start;
+		if (q.size == 0)
+			out << "\n Queue is empty. ";
+		else {
+			out << "\n ";
+			while (tmp != NULL) {
+				out << tmp->data << " ";
+				tmp = tmp->next;
+			}
+		}
+		return out;
+	}
+};
 
 #endif
